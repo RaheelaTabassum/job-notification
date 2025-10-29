@@ -9,19 +9,15 @@ export async function POST(req) {
     const msg = {
       to: process.env.RECEIVER_EMAIL,
       from: process.env.SENDER_EMAIL,
-      subject: subject,
+      subject,
       text: message,
     };
 
     await sgMail.send(msg);
 
-    return new Response(JSON.stringify({ success: true, message: "✅ Email sent!" }), {
-      status: 200,
-    });
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
     console.error("SendGrid Error:", error);
-    return new Response(JSON.stringify({ success: false, error: error.message }), {
-      status: 500,
-    });
+    return new Response(JSON.stringify({ success: false, error }), { status: 500 });
   }
 }
